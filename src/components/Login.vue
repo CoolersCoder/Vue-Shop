@@ -6,16 +6,15 @@
         <img src="../assets/logo.png" alt />
       </div>
       <!-- login form  -->
-      <el-form class="login_form">
+      <el-form :model="loginForm" class="login_form">
         <!-- login usernmae -->
         <el-form-item>
-          <el-input></el-input>
+          <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
         <!-- login psd -->
         <el-form-item>
-          <el-input></el-input>
+          <el-input v-model="loginForm.password" type="password" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
-
         <el-form-item class="btns">
           <el-button type="primary">Login</el-button>
           <el-button type="info">Reset</el-button>
@@ -26,7 +25,16 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      loginForm: {
+        username: '',
+        pasword: ''
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -66,15 +74,15 @@ export default {}
   }
 }
 .btns {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 .login_form {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 0 20px;
-    //How to use box-sizing, 帮助你自适应内容而不至于因为设置padding， 超出盒子大小。
-    box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px;
+  //How to use box-sizing, 帮助你自适应内容而不至于因为设置padding， 超出盒子大小。
+  box-sizing: border-box;
 }
 </style>
