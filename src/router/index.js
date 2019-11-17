@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
-import Logout from '../components/Logout.vue'
 
 Vue.use(VueRouter)
 
@@ -15,9 +14,6 @@ const routes = [
   },
   {
     path: '/home', component: Home
-  },
-  {
-    path: '/logout', component: Logout
   }
 ]
 
