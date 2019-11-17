@@ -6,7 +6,7 @@
         <img src="../assets/logo.png" alt />
       </div>
       <!-- login form  -->
-      <el-form :model="loginForm" :rules="loginFormRules" class="login_form">
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="login_form">
         <!-- login usernmae -->
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
@@ -16,8 +16,8 @@
           <el-input v-model="loginForm.password" type="password" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item class="btns">
-          <el-button type="primary">Login</el-button>
-          <el-button type="info">Reset</el-button>
+          <el-button type="primary" @click="login">Login</el-button>
+          <el-button type="info" @click="resetLoginForm">Reset</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -26,31 +26,45 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       loginForm: {
-        username: '',
-        pasword: ''
+        username: "",
+        pasword: ""
       },
       loginFormRules: {
         username: [
           {
             required: true,
-            message: 'Please input user name',
-            trigger: 'blur'
+            message: "Please input user name",
+            trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: 'Please input password',
-            trigger: 'blur'
+            message: "Please input password",
+            trigger: "blur"
           }
         ]
       }
+    };
+  },
+
+  methods: {
+    resetLoginForm() {
+      this.$refs.loginFormRef.resetFields();
+    },
+    login() {
+      this.$refs.loginFormRef.validate(async valid => {
+        if (!valid) return;
+        const { data: res } = await this.$http.post("login", this.loginForm);
+        if (res.meta.status !== 200) return console.log("Login faile");
+        console.log("login success");
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
