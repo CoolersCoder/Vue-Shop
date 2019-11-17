@@ -30,8 +30,25 @@
             <el-switch v-model="scope.row.mg_state"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作"></el-table-column>
+        <el-table-column label="操作" width="180px">
+          <template slot-scope>
+            <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+            <el-tooltip effect="dark" content="分配角色" placement="top">
+              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[1, 2, 5, 10]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
@@ -42,7 +59,9 @@ export default {
     return {
       queryInfo: {
         query: "",
+        // 当前页数
         pagenum: 1,
+        // 当前每页多少数据
         pagesize: 2
       },
       userlist: [],
@@ -64,6 +83,16 @@ export default {
       this.userlist = res.data.users;
       this.total = res.data.total;
       console.log(this.userlist);
+    },
+    handleSizeChange(newSize) {
+      console.log(newSize);
+      this.queryInfo.pagesize = newSize;
+      this.getUserList()
+    },
+    handleCurrentChange(newPage) {
+      console.log(newPage);
+      this.queryInfo.pagenum = newPage
+      this.getUserList();
     }
   }
 };
