@@ -1,6 +1,10 @@
 <template>
     <div class="login_container">
-        <div class="login_box"></div>
+        <div class="login_box">
+            <div class="avatar_box">
+                <img src="../assets/logo.png" alt="">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -23,6 +27,27 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-0%, -50%);
+    transform: translate(-50%, -50%);
+    .avatar_box {
+        height: 130px;
+        width: 130px;
+        border: 1px solid #eee;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        // -50%, -50% 横向和纵向 size base on the .avatar_box
+        //图标上移
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #eee
+        }
+        padding: 10px;
+        box-shadow: 0 0 10px #ddd;
+    }
 }
+
 </style>
