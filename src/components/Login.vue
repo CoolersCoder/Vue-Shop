@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "",
-        pasword: ""
+        username: "admin",
+        pasword: "123456"
       },
       loginFormRules: {
         username: [
@@ -59,8 +59,10 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return;
         const { data: res } = await this.$http.post("login", this.loginForm);
-        if (res.meta.status !== 200) return console.log("Login faile");
-        console.log("login success");
+        if (res.meta.status !== 200) return this.$message.error('fail')
+        this.$message.success('success')
+        window.sessionStorage.setItem("token", res.data.token);
+        this.$router.push('/home')
       });
     }
   }
