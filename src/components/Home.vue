@@ -8,9 +8,17 @@
       <el-button type="info" @click="logout">Logout</el-button>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside :width="isCollapse ? '64px' :'200px'">
         <!-- left side menu -->
-        <el-menu background-color="#77af9c" text-color="#fff" active-text-color="#ffd04b" :unique-opened="true">
+        <div class="toggle-button" @click="toggleCollapse">|||</div>
+        <el-menu
+          background-color="#77af9c"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          :unique-opened="true"
+          :collapse="isCollapse"
+          :collapse-transition="false"
+        >
           <!-- First level menu -->
           <!-- :index 任意属性加冒号可以赋值为vue数值范围内 -->
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
@@ -43,12 +51,13 @@ export default {
       // left menu data
       menulist: [],
       iconsObj: {
-        '125': 'iconfont icon-user',
-        '103': 'iconfont icon-tijikongjian',
-        '101': 'iconfont icon-shangpin',
-        '102': 'iconfont icon-danju',
-        '145': 'iconfont icon-baobiao'
-      }
+        "125": "iconfont icon-user",
+        "103": "iconfont icon-tijikongjian",
+        "101": "iconfont icon-shangpin",
+        "102": "iconfont icon-danju",
+        "145": "iconfont icon-baobiao"
+      },
+      isCollapse: false
     };
   },
   created() {
@@ -64,6 +73,10 @@ export default {
       const { data: res } = await this.$http.get("menus");
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
       this.menulist = res.data;
+    },
+    // click to collapse menu
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
     }
   }
 };
@@ -87,6 +100,13 @@ export default {
 }
 .el-aside {
   background-color: #77af9c;
+  transition: width 0.25s;
+  .el-menu {
+    border-right: none;
+  }
+  &:hover {
+    // width: 100px;
+  }
 }
 .el-main {
   background-color: #fff;
@@ -96,5 +116,14 @@ export default {
 }
 .iconfont {
   margin-right: 10px;
+}
+.toggle-button {
+  background-color: #1f7055;
+  font-size: 10px;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.2em;
+  cursor: pointer;
 }
 </style>
