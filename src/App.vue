@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-
-  app root component
+  <router-view></router-view>
   </div>
 </template>
 
