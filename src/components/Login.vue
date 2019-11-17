@@ -6,13 +6,13 @@
         <img src="../assets/logo.png" alt />
       </div>
       <!-- login form  -->
-      <el-form :model="loginForm" class="login_form">
+      <el-form :model="loginForm" :rules="loginFormRules" class="login_form">
         <!-- login usernmae -->
-        <el-form-item>
+        <el-form-item prop="username">
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user"></el-input>
         </el-form-item>
         <!-- login psd -->
-        <el-form-item>
+        <el-form-item prop="password">
           <el-input v-model="loginForm.password" type="password" prefix-icon="el-icon-lock"></el-input>
         </el-form-item>
         <el-form-item class="btns">
@@ -31,6 +31,22 @@ export default {
       loginForm: {
         username: '',
         pasword: ''
+      },
+      loginFormRules: {
+        username: [
+          {
+            required: true,
+            message: 'Please input user name',
+            trigger: 'blur'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: 'Please input password',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   }
