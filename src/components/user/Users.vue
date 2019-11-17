@@ -15,7 +15,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary">添加用户</el-button>
+          <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
         </el-col>
       </el-row>
       <!-- userlist block -->
@@ -50,6 +50,14 @@
         :total="total"
       ></el-pagination>
     </el-card>
+
+    <el-dialog title="提示" :visible.sync="addDialogVisible" width="50%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,7 +73,8 @@ export default {
         pagesize: 2
       },
       userlist: [],
-      total: 0
+      total: 0,
+      addDialogVisible: false
     };
   },
   created() {
@@ -102,7 +111,7 @@ export default {
         userinfo.mg_state = !userinfo.mg_state;
         return this.$message.error("Failure to update state");
       }
-      this.$message.success("Update successful")
+      this.$message.success("Update successful");
     }
   }
 };
