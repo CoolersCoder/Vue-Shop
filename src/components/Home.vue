@@ -10,21 +10,21 @@
     <el-container>
       <el-aside width="200px">
         <!-- left side menu -->
-        <el-menu background-color="#77af9c" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu background-color="#77af9c" text-color="#fff" active-text-color="#ffd04b" :unique-opened="true">
           <!-- First level menu -->
           <!-- :index 任意属性加冒号可以赋值为vue数值范围内 -->
           <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
             <!-- First level template -->
             <template slot="title">
               <!-- icon -->
-              <i class="el-icon-location"></i>
+              <i :class="iconsObj[item.id]"></i>
               <span>{{item.authName}}</span>
             </template>
             <!-- second level menu -->
             <el-menu-item :index="subItem.id+''" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <!-- icon -->
-                <i class="el-icon-location"></i>
+                <i class="el-icon-menu"></i>
                 <span>{{subItem.authName}}</span>
               </template>
             </el-menu-item>
@@ -41,7 +41,14 @@ export default {
   data() {
     return {
       // left menu data
-      menulist: []
+      menulist: [],
+      iconsObj: {
+        '125': 'iconfont icon-user',
+        '103': 'iconfont icon-tijikongjian',
+        '101': 'iconfont icon-shangpin',
+        '102': 'iconfont icon-danju',
+        '145': 'iconfont icon-baobiao'
+      }
     };
   },
   created() {
@@ -86,5 +93,8 @@ export default {
 }
 .home-container {
   height: 100%;
+}
+.iconfont {
+  margin-right: 10px;
 }
 </style>
