@@ -10,8 +10,8 @@
     <el-card class="box-card">
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getUserList">
+            <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
@@ -27,7 +27,7 @@
         <el-table-column label="角色" prop="role_name"></el-table-column>
         <el-table-column label="状态" prop="mg_state">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state"></el-switch>
+            <el-switch v-model="scope.row.mg_state" @change="userStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180px">
@@ -87,12 +87,22 @@ export default {
     handleSizeChange(newSize) {
       console.log(newSize);
       this.queryInfo.pagesize = newSize;
-      this.getUserList()
+      this.getUserList();
     },
     handleCurrentChange(newPage) {
       console.log(newPage);
-      this.queryInfo.pagenum = newPage
+      this.queryInfo.pagenum = newPage;
       this.getUserList();
+    },
+    async userStateChange(userinfo) {
+      const { data: res } = await this.$http.put(
+        `users/${userinfo.id}/state/${userinfo.mg_state}`
+      );
+      if (res.meta.status !== 200) {
+        userinfo.mg_state = !userinfo.mg_state;
+        return this.$message.error("Failure to update state");
+      }
+      this.$message.success("Update successful")
     }
   }
 };
