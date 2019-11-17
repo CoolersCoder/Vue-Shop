@@ -18,6 +18,8 @@
           :unique-opened="true"
           :collapse="isCollapse"
           :collapse-transition="false"
+          :router="true"
+          :default-active="activePath"
         >
           <!-- First level menu -->
           <!-- :index 任意属性加冒号可以赋值为vue数值范围内 -->
@@ -29,7 +31,7 @@
               <span>{{item.authName}}</span>
             </template>
             <!-- second level menu -->
-            <el-menu-item :index="subItem.id+''" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/' + subItem.path)">
               <template slot="title">
                 <!-- icon -->
                 <i class="el-icon-menu"></i>
@@ -59,11 +61,13 @@ export default {
         "102": "iconfont icon-danju",
         "145": "iconfont icon-baobiao"
       },
-      isCollapse: false
+      isCollapse: false,
+      activePath: ''
     };
   },
   created() {
     this.getMenuList();
+    this.activePath = window.sessionStorage.getItem("activePath")
   },
   methods: {
     logout() {
@@ -79,6 +83,10 @@ export default {
     // click to collapse menu
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
+    },
+    saveNavState(activePath) {
+      window.sessionStorage.setItem("activePath", activePath)
+      this.activePath = activePath;
     }
   }
 };
