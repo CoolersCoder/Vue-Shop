@@ -64,6 +64,10 @@ export default {
         window.sessionStorage.setItem("token", res.data.token);
         this.$router.push('/home')
       });
+    },
+    logout() {
+      window.sessionStorage.clear()
+      this.$router.push('/home')
     }
   }
 };
